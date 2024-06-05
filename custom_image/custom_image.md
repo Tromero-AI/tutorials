@@ -12,7 +12,7 @@ By choosing the __Custom Image__ option you will be presented with a various set
 
 ![settings_section](./pictures/settings_section.png)
 
-Here you can add the path to your docker image and the ports(TCP or HTTP) that you want to open for the container. If you would like a range of ports too be open you can use "-" sign to define a range, e.g. 10520-10534 is all the port between 10520 and 10534 including those two ports too.
+Here you can add the path to your docker image and the ports(TCP or HTTP) that you want to open for the container.
 
 
 
@@ -20,14 +20,31 @@ Here you can add the path to your docker image and the ports(TCP or HTTP) that y
 
 If you would like to access an image in your private repository you can click on the private button, it will open a field for your to enter your docker access token. 
 
-To createa new __Access Token__ use [this](https://docs.docker.com/security/for-developers/access-tokens/) link.
+To create a new __Access Token__ use [this](https://docs.docker.com/security/for-developers/access-tokens/) link.
 
 ![private_option](./pictures/private_option.png)
 
 
+
+## How to select ports for your container:
+
+To open ports for your container you can enter your desired TCP or HTTP ports into their respective fields. If you would like to define a range/series of ports you can use "-" between the two end-ports of the series. This will include all the ports between the two end-ports including the ends-ports as well, e.g. 10520-10534 is all the port between 10520 and 10534 including those two ports too.
+
+![ports_selection](./pictures/ports_selection.png)
+
+
+## How to define your star command:
+
+
+It is popular with docker containers to define a start-command that starts your application. If you did not define one in your container or you would like to overwrite it, you can define your custom start-command in the __Start Command__ field. Similarly to Docker containers, we require you to define your start-command as an array of string separated by commas, e.g. ["/usr/sbin/sshd", "-D"] .
+
+
+![start_command](./pictures/start_command.png)
+
+
 ## How to have ssh access to your instance
 
-To be able to ssh into your instance you will need to have an ssh server set up in your docker image on port 22 with your chosen ssh key(s) present in your authorized keys folder.
+To be able to ssh into your instance you will need to have an ssh server set up in your docker image on port 22 (or your specified port) with your chosen ssh key(s) present in your authorized keys folder.
 
 If you do not know how to do this here is a template of an image that sets up ans ssh server on port 22 and copies your public ssh key from your chosen directory into your 
 
@@ -52,28 +69,35 @@ RUN mkdir -p /root/.ssh && \
     rm /tmp/id_rsa.pub
 
 # Expose port 22 to the outside world
+# it is just documentation
 EXPOSE 22
 
 # Start the SSH service
-CMD ["/usr/sbin/sshd", "-D"]
+# you can add the start command here too 
+CMD ["/usr/sbin/sshd", "-D"] 
 
 ```
 
 
-
-If the mentioned things above are all set up, then you just have to click the SSH ACCESS button and add port 22 to the TCP ports.
-
-![ssh_access](./pictures/ssh_access.png)
+If the mentioned things above are all set up, then you just have add port 22 (or your specified port) to the TCP ports.
 
 
 
-__IMPORTANT!__ If you do not select these options then your image will be run as a batch job, meaning you will not be able to access it and will be completed once the apllication terminates. However, if you do not want to interact with you image andjust want it to execute a job then you can do that too by not selecting these options.
 
 ## How to add enviornment variables
 
 If you would like to add enviornment variables to your instance you can click on the "Enviornment Variables" drop down menu where you can define the keys(variable names) and values that you would like to add as enviornment variables.
 
 ![env_variables](./pictures/env_varibles.png)
+
+
+
+## Run your container as a batch job
+
+If your container is not meant to serve requests and it is created for executing a job where the container calculates or executes a batch job based on some specification, but it does not actively interact with the the outside world, then you can select "My image runs as a batch job" option. This will not create an associated service or port mapping for your container, it simply runs the container until it completes its tasks.
+
+
+![batch_job](./pictures/batch_job.png)
 
 
 
