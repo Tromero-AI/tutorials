@@ -33,7 +33,7 @@ To open ports for your container you can enter your desired TCP or HTTP ports in
 ![ports_selection](./pictures/ports_selection.png)
 
 
-## How to define your star command:
+## How to define your start command:
 
 
 It is popular with docker containers to define a start-command that starts your application. If you did not define one in your container or you would like to overwrite it, you can define your custom start-command in the __Start Command__ field. Similarly to Docker containers, we require you to define your start-command as an array of string separated by commas, e.g. ["/usr/sbin/sshd", "-D"] .
