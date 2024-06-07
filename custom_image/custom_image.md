@@ -33,13 +33,21 @@ To open ports for your container you can enter your desired TCP or HTTP ports in
 ![ports_selection](./pictures/ports_selection.png)
 
 
-## How to define your star command:
+## How to define your Docker star command:
 
 
-It is popular with docker containers to define a start-command that starts your application. If you did not define one in your container or you would like to overwrite it, you can define your custom start-command in the __Start Command__ field. Similarly to Docker containers, we require you to define your start-command as an array of string separated by commas, e.g. ["/usr/sbin/sshd", "-D"] .
+It is popular with docker containers to define a start-command that starts your application. If you did not define one in your container or you would like to overwrite it, you can define your custom start-command in the __Start Command__ field. Similarly to Docker containers, we require you to define your Docker start-command as an array of string separated by commas, e.g. ["/usr/sbin/sshd", "-D"] . __Important__ : this start-command overwrites the one defined in your Docker file so make sure that is what you want to and the command is correct before you use it.
 
 
 ![start_command](./pictures/start_command.png)
+
+
+## Add your post start command:
+
+If you would like to execute other commands or setups after your Docker start command, for example you are using a public image which you do not know the Docker start command of and want to start a server after the container has started, then you can use the post-start command. This command is executed in the command line right after your container started and executed its Docker start-command. 
+
+
+![post_start_command](./pictures/post_start_command.png)
 
 
 ## How to have ssh access to your instance
